@@ -29,16 +29,15 @@ namespace Bachelor_API.Model
 
         private int GenerateRandomCode()
         {
-            const int minCode = 100000; // Smallest 6-digit number
-            const int maxCode = 999999; // Largest 6-digit number
+            const int minCode = 100000; 
+            const int maxCode = 999999; 
             return _random.Next(minCode, maxCode + 1);
         }
 
         private bool CodeExistsInDatabase(int code)
         {
-            // Replace this with your actual Entity Framework query to check if the code exists in the database.
-            return _dbContext.Set<UnitPlan>()
-                .Any(obj => obj.Code == code);
+            return _dbContext.Set<Lesson>()
+                .Any(obj => obj.SharingCode == code);
         }
     }
 }

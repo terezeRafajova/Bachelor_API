@@ -14,7 +14,19 @@ builder.Services.AddDbContext<Bachelor_APIContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Enable CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAny",
+        builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAny");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -25,8 +37,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-app.MapUnitPlanEndpoints();
+app.MapLessonEndpoints();
 
 app.Run();
 
