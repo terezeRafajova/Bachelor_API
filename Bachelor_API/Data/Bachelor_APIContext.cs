@@ -16,5 +16,6 @@ namespace Bachelor_API.Data
 
         public DbSet<Bachelor_API.Model.Lesson> Lesson { get; set; } = default!;
 
+        public DbSet<Bachelor_API.Model.Teacher> Teacher { get; set; }
     }
 }

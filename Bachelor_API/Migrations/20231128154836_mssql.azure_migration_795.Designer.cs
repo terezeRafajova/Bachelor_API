@@ -4,6 +4,7 @@ using Bachelor_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bachelor_API.Migrations
 {
     [DbContext(typeof(Bachelor_APIContext))]
-    partial class Bachelor_APIContextModelSnapshot : ModelSnapshot
+    [Migration("20231128154836_mssql.azure_migration_795")]
+    partial class mssqlazure_migration_795
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,29 +105,6 @@ namespace Bachelor_API.Migrations
                     b.HasKey("LessonId");
 
                     b.ToTable("Lesson");
-                });
-
-            modelBuilder.Entity("Bachelor_API.Model.Teacher", b =>
-                {
-                    b.Property<int>("TeacherId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TeacherId");
-
-                    b.ToTable("Teacher");
                 });
 
             modelBuilder.Entity("Bachelor_API.Model.CodeBlock", b =>
