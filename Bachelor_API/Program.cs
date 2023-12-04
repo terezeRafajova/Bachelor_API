@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Bachelor_API.Data;
 using Bachelor_API;
 using Bachelor_API.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Bachelor_APIContext>(options =>
@@ -13,6 +16,7 @@ builder.Services.AddDbContext<Bachelor_APIContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication().AddJwtBearer();
 
 // Enable CORS
 builder.Services.AddCors(options =>
@@ -38,6 +42,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapLessonEndpoints();
+
+app.UseAuthentication();
 
 app.Run();
 

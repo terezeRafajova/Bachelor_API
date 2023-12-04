@@ -3,6 +3,7 @@ using Bachelor_API.Data;
 using Bachelor_API.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
+using Microsoft.AspNetCore.Authorization;
 namespace Bachelor_API;
 
 public static class LessonEndpoints
@@ -11,10 +12,7 @@ public static class LessonEndpoints
     {
         var group = routes.MapGroup("/api/Lesson").WithTags(nameof(Lesson));
 
-        group.MapGet("/", async (Bachelor_APIContext db) =>
-        {
-            return await db.Lesson.ToListAsync();
-        })
+        group.MapGet("/", GetAllLessons)
         .WithName("GetAllLessons")
         .WithOpenApi();
 
@@ -69,7 +67,8 @@ public static class LessonEndpoints
             return TypedResults.Created($"/api/Lesson/{lesson.LessonId}",lesson);
         })
         .WithName("CreateLesson")
-        .WithOpenApi();
+        .WithOpenApi()
+        .RequireAuthorization();
 
         group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (int lessonid, Bachelor_APIContext db) =>
         {
@@ -80,5 +79,11 @@ public static class LessonEndpoints
         })
         .WithName("DeleteLesson")
         .WithOpenApi();
+    }
+
+    public static async Task<Lesson[]> GetAllLessons(Bachelor_APIContext db)
+    {
+        return await db.Lesson.ToArrayAsync();
+
     }
 }
