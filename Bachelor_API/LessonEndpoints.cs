@@ -16,10 +16,10 @@ public static class LessonEndpoints
         .WithName("GetAllLessons")
         .WithOpenApi();
 
-        group.MapGet("/id/{id}", async Task<Results<Ok<Lesson>, NotFound>> (int lessonid, Bachelor_APIContext db) =>
+        group.MapGet("/id/{id}", async Task<Results<Ok<Lesson>, NotFound>> (int id, Bachelor_APIContext db) =>
         {
             return await db.Lesson.AsNoTracking()
-                .FirstOrDefaultAsync(model => model.LessonId == lessonid)
+                .FirstOrDefaultAsync(model => model.LessonId == id)
                 is Lesson model
                     ? TypedResults.Ok(model)
                     : TypedResults.NotFound();
@@ -27,13 +27,18 @@ public static class LessonEndpoints
         .WithName("GetLessonById")
         .WithOpenApi();
 
-        group.MapGet("/code/{code}", async Task<Results<Ok<Lesson>, NotFound>> (int sharingCode, Bachelor_APIContext db) =>
+        group.MapGet("/code/{code}", async Task<Results<Ok<Lesson>, NotFound>> (int code, Bachelor_APIContext db) =>
         {
-            return await db.Lesson.AsNoTracking()
-                 .FirstOrDefaultAsync(model => model.SharingCode == sharingCode)
-                 is Lesson model
-                     ? TypedResults.Ok(model)
-                     : TypedResults.NotFound();
+            var lesson = await db.Lesson
+            .Include(l => l.CodeBlocks)
+            .Include(l => l.Descriptions)
+            .Include(l => l.Titles)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(model => model.SharingCode == code);
+
+            return lesson != null
+                ? TypedResults.Ok(lesson)
+                : TypedResults.NotFound();
         })
         .WithName("GetLessonByCode")
         .WithOpenApi();

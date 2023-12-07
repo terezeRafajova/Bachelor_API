@@ -4,6 +4,7 @@ using Bachelor_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bachelor_API.Migrations
 {
     [DbContext(typeof(Bachelor_APIContext))]
-    partial class Bachelor_APIContextModelSnapshot : ModelSnapshot
+    [Migration("20231207183536_mssql.azure_migration_735")]
+    partial class mssqlazure_migration_735
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

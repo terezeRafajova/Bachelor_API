@@ -10,8 +10,9 @@ namespace Bachelor_API.Model
         public string? Username { get; set; }
         public int? SharingCode { get; set; }
         public int? SharingTime { get; set; }
-        public CodeBlock[] CodeBlocks { get; set; } = new CodeBlock[0];
-        public Description[] Descriptions { get; set; } = new Description[0];
+        public List<CodeBlock> CodeBlocks { get; set; } = new List<CodeBlock>();
+        public List<Description> Descriptions { get; set; } = new List<Description>();
+        public List<Title> Titles { get; set; } = new List<Title>();
         public int? NumberOfPages { get; set; }
 
     }

@@ -17,12 +17,12 @@ namespace Bachelor_API
 
         public string CreateAcessToken(Teacher teacher)
         {
-            var key = Encoding.UTF8.GetBytes(_configuration["String Key"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["StringKey"]);
             var skey = new SymmetricSecurityKey(key);
             var SignedCredential = new SigningCredentials(skey, SecurityAlgorithms.HmacSha256Signature);
             var uClaims = new ClaimsIdentity(new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub,teacher.Username)
+                new Claim(JwtRegisteredClaimNames.Sub,teacher.Username)
             });
             var expires = DateTime.UtcNow.AddHours(12);     
 
@@ -31,8 +31,9 @@ namespace Bachelor_API
             {
                 Subject = uClaims,
                 Expires = expires,
-                Issuer = "Bachelor_API",
-                SigningCredentials = SignedCredential,
+                Issuer = _configuration["ValidIssuer"],
+                Audience = _configuration["ValidAudiences"],
+                SigningCredentials = SignedCredential
             };
 
             //create token

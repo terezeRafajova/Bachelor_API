@@ -4,6 +4,7 @@ using Bachelor_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bachelor_API.Migrations
 {
     [DbContext(typeof(Bachelor_APIContext))]
-    partial class Bachelor_APIContextModelSnapshot : ModelSnapshot
+    [Migration("20231205182000_mssql.azure_migration_857")]
+    partial class mssqlazure_migration_857
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,33 +130,6 @@ namespace Bachelor_API.Migrations
                     b.ToTable("Teacher");
                 });
 
-            modelBuilder.Entity("Bachelor_API.Model.Title", b =>
-                {
-                    b.Property<int>("TitleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TitleId"));
-
-                    b.Property<int?>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PageNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Slot")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TitleId");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("Title");
-                });
-
             modelBuilder.Entity("Bachelor_API.Model.CodeBlock", b =>
                 {
                     b.HasOne("Bachelor_API.Model.Lesson", null)
@@ -168,20 +144,11 @@ namespace Bachelor_API.Migrations
                         .HasForeignKey("LessonId");
                 });
 
-            modelBuilder.Entity("Bachelor_API.Model.Title", b =>
-                {
-                    b.HasOne("Bachelor_API.Model.Lesson", null)
-                        .WithMany("Titles")
-                        .HasForeignKey("LessonId");
-                });
-
             modelBuilder.Entity("Bachelor_API.Model.Lesson", b =>
                 {
                     b.Navigation("CodeBlocks");
 
                     b.Navigation("Descriptions");
-
-                    b.Navigation("Titles");
                 });
 #pragma warning restore 612, 618
         }
